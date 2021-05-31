@@ -1,7 +1,7 @@
 import * as qs from 'qs'
 import { useEffect, useState } from 'react'
 import { clearnObject, useDebounce, useMount } from 'utils/index'
-import { List } from './list.jsx'
+import { List } from './list'
 import { SearchPanel } from './search-panel'
 
 const apiUrl = process.env.REACT_APP_BASE_URL
@@ -16,7 +16,7 @@ export const ProjectListScreen = () => {
   })
   const [list, setList] = useState([])
   // 防抖延迟
-  const dobounceParam = useDebounce(param, 2000)
+  const dobounceParam = useDebounce(param, 200)
 
   useEffect(() => {
     fetch(

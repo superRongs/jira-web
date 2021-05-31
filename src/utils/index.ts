@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 
-export const isFalsy = (value) => (value === 0 ? false : !value)
+export const isFalsy = (value: any) => (value === 0 ? false : !value)
 
 // 清楚对象空值
-export const clearnObject = (object) => {
+// 暂时any   object
+export const clearnObject = (object: any) => {
   const result = { ...object }
   Object.keys(result).forEach((key) => {
     //0的时候
@@ -16,20 +17,20 @@ export const clearnObject = (object) => {
 }
 
 // 普通debounce
-export const debounce = (fn, delay) => {
-  let timeout
-  return (...param) => {
-    if (timeout) {
-      clearTimeout(timeout)
-    }
-    timeout = setTimeout(() => {
-      fn(...param)
-    }, delay)
-  }
-}
+// export const debounce = (fn, delay) => {
+//   let timeout
+//   return (...param) => {
+//     if (timeout) {
+//       clearTimeout(timeout)
+//     }
+//     timeout = setTimeout(() => {
+//       fn(...param)
+//     }, delay)
+//   }
+// }
 
 //custom hook debounce
-export const useDebounce = (value, delay) => {
+export const useDebounce = (value: any, delay?: number) => {
   const [debounceValue, setDebounceValue] = useState(value)
   useEffect(() => {
     // 每次在value变化之后，设置一个定时器
@@ -41,7 +42,7 @@ export const useDebounce = (value, delay) => {
 }
 
 //custom hook
-export const useMount = (callback) => {
+export const useMount = (callback: () => void) => {
   useEffect(() => {
     callback()
   }, [])

@@ -1,4 +1,19 @@
-export const List = ({ users, list }) => {
+import { User } from 'screens/project-list/search-panel'
+
+interface Project {
+  id: string
+  name: string
+  personId: string
+  organization: string
+  pin: boolean
+}
+
+interface ListProps {
+  users: User[]
+  list: Project[]
+}
+
+export const List = ({ users, list }: ListProps) => {
   return (
     <table>
       <thead>
