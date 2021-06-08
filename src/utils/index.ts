@@ -30,7 +30,7 @@ export const clearnObject = (object: any) => {
 // }
 
 //custom hook debounce
-export const useDebounce = (value: any, delay?: number) => {
+export const useDebounce = <V>(value: V, delay?: number) => {
   const [debounceValue, setDebounceValue] = useState(value)
   useEffect(() => {
     // 每次在value变化之后，设置一个定时器
