@@ -1,9 +1,9 @@
 import { FormEvent } from 'react'
 
-const apiUrl = process.env.REACT_APP_BASE_URL
+const apiUrl = process.env.REACT_APP_API_URL
 export const LoginScreens = () => {
   const login = (params: { username: string; password: string }) => {
-    fetch(`${apiUrl}/login`, {
+    return fetch(`${apiUrl}/resgister`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

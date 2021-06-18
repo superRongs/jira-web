@@ -4,7 +4,7 @@ import { clearnObject, useDebounce, useMount } from 'utils/index'
 import { List } from './list'
 import { SearchPanel } from './search-panel'
 
-const apiUrl = process.env.REACT_APP_BASE_URL
+const apiUrl = process.env.REACT_APP_API_URL
 
 export const ProjectListScreen = () => {
   // 下列列表
