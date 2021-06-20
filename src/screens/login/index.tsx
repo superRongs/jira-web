@@ -1,20 +1,22 @@
+import { useAuth } from 'context/auth-context'
 import { FormEvent } from 'react'
 
-const apiUrl = process.env.REACT_APP_API_URL
+// const apiUrl = process.env.REACT_APP_API_URL
 export const LoginScreens = () => {
-  const login = (params: { username: string; password: string }) => {
-    return fetch(`${apiUrl}/resgister`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(params),
-    }).then(async (res) => {
-      if (res.ok) {
-        // setList(await res.json())
-      }
-    })
-  }
+  // const login = (params: { username: string; password: string }) => {
+  //   return fetch(`${apiUrl}/login`, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify(params),
+  //   }).then(async (res) => {
+  //     if (res.ok) {
+  //       // setList(await res.json())
+  //     }
+  //   })
+  // }
+  const { login, user } = useAuth()
 
   // onSubmit接受的event泛型 HTMLFormElement
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -30,6 +32,7 @@ export const LoginScreens = () => {
   }
   return (
     <form onSubmit={handleSubmit}>
+      {user ? <div>用户名：{user?.name}</div> : ''}
       <div>
         <label htmlFor="username">用户名</label>
         <input type="text" id={'username'} />
