@@ -1,10 +1,10 @@
-import * as qs from 'qs'
 import { useEffect, useState } from 'react'
+import { useHttp } from 'utils/http'
 import { clearnObject, useDebounce, useMount } from 'utils/index'
 import { List } from './list'
 import { SearchPanel } from './search-panel'
 
-const apiUrl = process.env.REACT_APP_API_URL
+// const apiUrl = process.env.REACT_APP_API_URL
 
 export const ProjectListScreen = () => {
   // 下列列表
@@ -18,14 +18,11 @@ export const ProjectListScreen = () => {
   // 防抖延迟
   const dobounceParam = useDebounce(param, 200)
 
+  //引入useHttp hook
+  const client = useHttp()
+
   useEffect(() => {
-    fetch(
-      `${apiUrl}/projects?${qs.stringify(clearnObject(dobounceParam))}`
-    ).then(async (res) => {
-      if (res.ok) {
-        setList(await res.json())
-      }
-    })
+    client('projects', clearnObject(dobounceParam)).then(setList)
   }, [dobounceParam])
 
   // useEffect(() => {
@@ -36,11 +33,7 @@ export const ProjectListScreen = () => {
   //   })
   // }, [])
   useMount(() => {
-    fetch(`${apiUrl}/users`).then(async (res) => {
-      if (res.ok) {
-        setUsers(await res.json())
-      }
-    })
+    client('users').then(setUsers)
   })
   return (
     <div>
