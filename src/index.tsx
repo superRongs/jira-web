@@ -1,11 +1,13 @@
 //分布式服务端
-import { AppProviders } from 'context'
-import { loadDevTools } from 'jira-dev-tool'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 import './index.css'
 import reportWebVitals from './reportWebVitals'
+import { AppProviders } from 'context'
+import { loadDevTools } from 'jira-dev-tool'
+// 覆盖jira-dev-tool的部分样式
+import 'antd/dist/antd.less'
 
 loadDevTools(() =>
   ReactDOM.render(

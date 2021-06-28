@@ -1,5 +1,6 @@
 import { useAuth } from 'context/auth-context'
 import { FormEvent } from 'react'
+import { Button, Form, Input } from 'antd'
 
 // const apiUrl = process.env.REACT_APP_API_URL
 export const RegisterScreens = () => {
@@ -7,27 +8,33 @@ export const RegisterScreens = () => {
   const { register, user } = useAuth()
 
   // onSubmit接受的event泛型 HTMLFormElement
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (values: { username: string; password: string }) => {
     // 阻止默认事件
-    event.preventDefault()
+    // event.preventDefault()
+    // const username = (event.currentTarget.elements[0] as HTMLInputElement).value
+    // const password = (event.currentTarget.elements[1] as HTMLInputElement).value
 
-    const username = (event.currentTarget.elements[0] as HTMLInputElement).value
-    const password = (event.currentTarget.elements[1] as HTMLInputElement).value
-
-    register({ username, password })
+    register(values)
   }
   return (
-    <form onSubmit={handleSubmit}>
-      {user ? <div>用户名：{user?.name}</div> : ''}
-      <div>
-        <label htmlFor="username">用户名</label>
-        <input type="text" id={'username'} />
-      </div>
-      <div>
-        <label htmlFor="password">密码</label>
-        <input type="password" id={'password'} />
-      </div>
-      <button type={'submit'}>注册</button>
-    </form>
+    <Form onFinish={handleSubmit}>
+      <Form.Item
+        name={'username'}
+        rules={[{ required: true, message: '请输入用户名' }]}
+      >
+        <Input placeholder={'用户名'} type="text" id={'username'} />
+      </Form.Item>
+      <Form.Item
+        name={'password'}
+        rules={[{ required: true, message: '请输入密码' }]}
+      >
+        <Input placeholder={'密码'} type="password" id={'password'} />
+      </Form.Item>
+      <Form.Item>
+        <Button htmlType={'submit'} type={'primary'}>
+          注册
+        </Button>
+      </Form.Item>
+    </Form>
   )
 }
