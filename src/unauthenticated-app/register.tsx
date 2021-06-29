@@ -1,11 +1,11 @@
 import { useAuth } from 'context/auth-context'
-import { FormEvent } from 'react'
-import { Button, Form, Input } from 'antd'
+import { Form, Input } from 'antd'
+import { LongButton } from 'unauthenticated-app'
 
 // const apiUrl = process.env.REACT_APP_API_URL
 export const RegisterScreens = () => {
   // 全局引入
-  const { register, user } = useAuth()
+  const { register } = useAuth()
 
   // onSubmit接受的event泛型 HTMLFormElement
   const handleSubmit = (values: { username: string; password: string }) => {
@@ -31,9 +31,9 @@ export const RegisterScreens = () => {
         <Input placeholder={'密码'} type="password" id={'password'} />
       </Form.Item>
       <Form.Item>
-        <Button htmlType={'submit'} type={'primary'}>
+        <LongButton htmlType={'submit'} type={'primary'}>
           注册
-        </Button>
+        </LongButton>
       </Form.Item>
     </Form>
   )
