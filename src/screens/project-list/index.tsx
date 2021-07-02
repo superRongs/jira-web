@@ -24,17 +24,12 @@ export const ProjectListScreen = () => {
 
   useEffect(() => {
     client('projects', clearnObject(dobounceParam)).then(setList)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dobounceParam])
 
-  // useEffect(() => {
-  //   fetch(`${apiUrl}/users`).then(async (res) => {
-  //     if (res.ok) {
-  //       setUsers(await res.json())
-  //     }
-  //   })
-  // }, [])
   useMount(() => {
     client('users').then(setUsers)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   })
   return (
     <Container>

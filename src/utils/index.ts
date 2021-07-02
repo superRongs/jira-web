@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react'
 
-export const isFalsy = (value: any) => (value === 0 ? false : !value)
+export const isFalsy = (value: unknown) => (value === 0 ? false : !value)
+export const isVoid = (value: unknown) =>
+  value === undefined || value === null || value === ''
 
 // 清楚对象空值
-// 暂时any   object
-export const clearnObject = (object: any) => {
+// 暂时any   object    object 对象键值[key:string]: unknown}   例如{name: 'qing'}
+export const clearnObject = (object: { [key: string]: unknown }) => {
   const result = { ...object }
-  Object.keys(result).forEach((key) => {
+  Object.keys(result).forEach((key: string) => {
     //0的时候
     const value = result[key]
-    if (isFalsy(value)) {
+    if (isVoid(value)) {
       delete result[key]
     }
   })
@@ -45,6 +47,7 @@ export const useDebounce = <V>(value: V, delay?: number) => {
 export const useMount = (callback: () => void) => {
   useEffect(() => {
     callback()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 }
 
