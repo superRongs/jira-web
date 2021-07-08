@@ -1,45 +1,47 @@
 import styled from '@emotion/styled'
-import { useEffect, useState } from 'react'
-import { useHttp } from 'utils/http'
-import { clearnObject, useDebounce, useMount } from 'utils/index'
+import { Typography } from 'antd'
+import { useState } from 'react'
+import { useDebounce } from 'utils/index'
+import { useProject } from 'utils/project'
+import { useUser } from 'utils/user'
 import { List } from './list'
 import { SearchPanel } from './search-panel'
 
 // const apiUrl = process.env.REACT_APP_API_URL
 
 export const ProjectListScreen = () => {
-  // 下列列表
-  const [users, setUsers] = useState([])
   // 输入框
   const [param, setParam] = useState({
     name: '',
     personId: '',
   })
-  const [list, setList] = useState([])
+  // const [list, setList] = useState([])
+  // const [isLoading, setIsLoading] = useState(false)
+  // const [error, setError] = useState<null | Error>(null)
   // 防抖延迟
   const dobounceParam = useDebounce(param, 200)
 
-  //引入useHttp hook
-  const client = useHttp()
+  //引入useProject hook  （表格列表）
+  const { isLoading, error, data: list } = useProject(dobounceParam)
+  //引入useUser hook   （用户列表）
+  const { data: users } = useUser()
 
-  useEffect(() => {
-    client('projects', clearnObject(dobounceParam)).then(setList)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dobounceParam])
-
-  useMount(() => {
-    client('users').then(setUsers)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  })
   return (
     <Container>
       <h1>项目列表</h1>
       <SearchPanel
-        users={users}
+        users={users || []}
         param={param}
         setParam={setParam}
       ></SearchPanel>
-      <List users={users} list={list}></List>
+      {error ? (
+        <Typography.Text type={'danger'}>{error.message}</Typography.Text>
+      ) : null}
+      <List
+        loading={isLoading}
+        users={users || []}
+        dataSource={list || []}
+      ></List>
     </Container>
   )
 }

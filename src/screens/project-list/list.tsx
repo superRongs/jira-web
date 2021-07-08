@@ -1,8 +1,8 @@
-import { Table } from 'antd'
+import { Table, TableProps } from 'antd'
 import dayjs from 'dayjs'
 import { User } from 'screens/project-list/search-panel'
 
-interface Project {
+export interface Project {
   id: string
   name: string
   personId: string
@@ -11,12 +11,15 @@ interface Project {
   created: number
 }
 
-interface ListProps {
+interface ListProps extends TableProps<Project> {
   users: User[]
-  list: Project[]
+  // list: Project[]
 }
 
-export const List = ({ users, list }: ListProps) => {
+export const List = ({ users, ...props }: ListProps) => {
+  /*
+    ...props 结构了ListProps所有属性   包括list的属性还有Table组件的属性
+  */
   return (
     <Table
       rowKey={'id'}
@@ -54,7 +57,7 @@ export const List = ({ users, list }: ListProps) => {
           },
         },
       ]}
-      dataSource={list}
+      {...props}
     ></Table>
   )
 }
