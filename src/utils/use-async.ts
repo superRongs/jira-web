@@ -21,6 +21,7 @@ export const useAsync = <D>(
   initialState?: State<D>,
   initialConfig?: typeof defaultConfig
 ) => {
+  // 处理异常主动返回    默认为false    用户主动传入initialConfig.throwOnError  为true   并且会覆盖前者
   const config = { ...defaultConfig, ...initialConfig }
   const [state, setState] = useState({
     ...defaultInitialState,

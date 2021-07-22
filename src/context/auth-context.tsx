@@ -1,8 +1,10 @@
 import * as auth from 'auth-provider'
-import React, { ReactNode, useState } from 'react'
+import { FullPageError, FullPageLoading } from 'components/lib'
+import React, { ReactNode } from 'react'
 import { User } from 'screens/project-list/search-panel'
 import { useMount } from 'utils'
 import { http } from 'utils/http'
+import { useAsync } from 'utils/use-async'
 
 interface AuthForm {
   username: string
@@ -33,7 +35,15 @@ const AuthContext =
 AuthContext.displayName = 'AuthContext'
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null)
+  const {
+    data: user,
+    error,
+    isLoading,
+    isIdle,
+    run,
+    setData: setUser,
+  } = useAsync<User | null>()
+  // const [user, setUser] = useState<User | null>(null)   已替换
   // point free 此时的setUser 等同  user=setUser(user)
   const login = (form: AuthForm) => auth.login(form).then(setUser)
   const register = (form: AuthForm) => auth.register(form).then(setUser)
@@ -41,8 +51,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   //页面执行都调用查看
   useMount(() => {
-    bootstrapUser().then(setUser)
+    run(bootstrapUser())
+    // bootstrapUser().then(setUser)
   })
+
+  if (isIdle || isLoading) {
+    return <FullPageLoading />
+  }
+
+  if (error) {
+    return <FullPageError error={error} />
+  }
 
   // 导出value要对应的赋值类型   所以在React.createContext定义泛型
   return (
