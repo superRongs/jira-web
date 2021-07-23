@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { Typography } from 'antd'
 import { useState } from 'react'
-import { useDebounce } from 'utils/index'
+import { useDebounce, useDocumentTitle } from 'utils/index'
 import { useProject } from 'utils/project'
 import { useUser } from 'utils/user'
 import { List } from './list'
@@ -25,6 +25,7 @@ export const ProjectListScreen = () => {
   const { isLoading, error, data: list } = useProject(dobounceParam)
   //引入useUser hook   （用户列表）
   const { data: users } = useUser()
+  useDocumentTitle('项目列表', false)
 
   return (
     <Container>

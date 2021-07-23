@@ -7,10 +7,14 @@ import logo from '../assets/logo.svg'
 import left from '../assets/left.svg'
 import right from '../assets/right.svg'
 import { Card, Divider, Button, Typography } from 'antd'
+import { useDocumentTitle } from 'utils'
+// import { Helmet } from 'react-helmet'
 
 export const UnauthenticatedApp = () => {
   const [isRegister, setIsRegister] = useState(false)
   const [error, setError] = useState<Error | null>(null)
+  useDocumentTitle('请登录注册后继续')
+
   return (
     <Container>
       <Header />

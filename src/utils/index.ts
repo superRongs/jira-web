@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export const isFalsy = (value: unknown) => (value === 0 ? false : !value)
 export const isVoid = (value: unknown) =>
@@ -70,4 +70,27 @@ export const useArray = <T>(initArray: T[]) => {
       setValue([])
     },
   }
+}
+
+//修改标题
+export const useDocumentTitle = (
+  title: string,
+  keepOnUnmount: boolean = true
+) => {
+  // 页面加载时  旧title
+  //页面加载完成   新title
+  const oldTitle = useRef(document.title).current
+
+  useEffect(() => {
+    document.title = title
+  }, [title])
+
+  useEffect(() => {
+    return () => {
+      if (!keepOnUnmount) {
+        // 如果不指定依赖   读到旧的title
+        document.title = oldTitle
+      }
+    }
+  }, [keepOnUnmount, oldTitle])
 }
