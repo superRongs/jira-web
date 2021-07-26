@@ -94,3 +94,6 @@ export const useDocumentTitle = (
     }
   }, [keepOnUnmount, oldTitle])
 }
+
+// 重置首页
+export const resetRoute = () => (window.location.href = window.location.origin)

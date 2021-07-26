@@ -4,9 +4,10 @@ import { useAuth } from 'context/auth-context'
 import { ProjectListScreen } from 'screens/project-list'
 import { ReactComponent as SoftWare } from 'assets/software-logo.svg'
 import { Dropdown, Menu, Button } from 'antd'
-import { Routes, Route } from 'react-router'
+import { Routes, Route, Navigate } from 'react-router'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { ProjectScreen } from 'screens/project'
+import { resetRoute } from 'utils'
 
 export const AuthenticatedApp = () => {
   return (
@@ -20,6 +21,8 @@ export const AuthenticatedApp = () => {
               path={'/projects/:projectId/*'}
               element={<ProjectScreen />}
             ></Route>
+            {/* 页面重置指定页面 */}
+            <Navigate to={'/projects'} />
           </Routes>
         </Router>
       </Main>
@@ -32,7 +35,9 @@ const PageHeader = () => {
   return (
     <Header between={true}>
       <HeaderLeft gap={true}>
-        <SoftWare width={'18rem'} color={'rgb(38,132,255)'} />
+        <Button type={'link'} onClick={resetRoute}>
+          <SoftWare width={'18rem'} color={'rgb(38,132,255)'} />
+        </Button>
         <h2>项目</h2>
         <h2>用户</h2>
       </HeaderLeft>
