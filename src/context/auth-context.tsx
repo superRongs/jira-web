@@ -52,8 +52,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   //页面执行都调用查看
   useMount(() => {
     run(bootstrapUser())
-    // bootstrapUser().then(setUser)
   })
+  // useMount(
+  //   useCallback(() => {
+  //     run(bootstrapUser())
+  //     // eslint-disable-next-line react-hooks/exhaustive-deps
+  //   }, [])
+  // )
 
   if (isIdle || isLoading) {
     return <FullPageLoading />

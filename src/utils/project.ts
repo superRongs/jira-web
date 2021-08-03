@@ -10,6 +10,7 @@ export const useProject = (param?: Partial<Project>) => {
   const client = useHttp()
   useEffect(() => {
     run(client('projects', { data: clearnObject(param || {}) }))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [param])
 
   return result
